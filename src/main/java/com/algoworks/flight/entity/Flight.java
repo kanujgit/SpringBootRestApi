@@ -64,7 +64,7 @@ public class Flight {
 	@Column(name = "total_passanger")
 	private Integer numberOfPassanger;
 
-	@Pattern(regexp="^(0|[1-9][0-9]*)$",message = "Please enter number format")
+	@Pattern(regexp = "^(0|[1-9][0-9]*)$", message = "Please enter number format")
 	@Column(name = "duration")
 	@NotNull(message = "Please enter duration ")
 	private String duration;

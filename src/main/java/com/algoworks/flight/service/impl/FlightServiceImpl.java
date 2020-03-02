@@ -46,11 +46,8 @@ public class FlightServiceImpl implements FlightService {
 				arrived);
 		if (list.size() == 0) {
 			throw new ResourceNotFoundException("No Flight detail found");
-		} else {
-
-			return list;
 		}
-
+		return list;
 	}
 
 }

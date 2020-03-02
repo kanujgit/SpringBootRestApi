@@ -32,7 +32,7 @@ public class Flight {
 	@Column(name = "flight_name")
 	private String flightName;
 
-	@NotEmpty(message = "Please enter departure location")
+	@NotEmpty(message = "Please enter departure location ")
 	@Column(name = "departure_location")
 	private String departureLocation;
 

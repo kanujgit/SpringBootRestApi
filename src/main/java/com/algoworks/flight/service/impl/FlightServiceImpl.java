@@ -18,7 +18,12 @@ public class FlightServiceImpl implements FlightService {
 
 	@Override
 	public Flight addFlight(Flight flight) {
-		return flightRepository.save(flight);
+
+		Flight fl = flightRepository.save(flight);
+		if (fl == null) {
+
+		}
+		return fl;
 	}
 
 	@Override
@@ -34,7 +39,7 @@ public class FlightServiceImpl implements FlightService {
 	public Flight getDetailByName(String name) {
 		Flight flight = flightRepository.findByflightName(name);
 		if (flight == null) {
-			throw new ResourceNotFoundException("" + name);
+			throw new ResourceNotFoundException("No flight found with " + name);
 		}
 		return flight;
 

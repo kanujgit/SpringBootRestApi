@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,7 +28,7 @@ public class Flight {
 
 	@NotEmpty(message = "Please enter flight name")
 	@Size(max = 20, min = 2, message = "Please enter valid flight name")
-	@Column(name = "flight_name")
+	@Column(name = "flight_name", unique = true)
 	private String flightName;
 
 	@NotEmpty(message = "Please enter departure location ")
@@ -64,9 +63,8 @@ public class Flight {
 	@Column(name = "total_passanger")
 	private Integer numberOfPassanger;
 
-	@Pattern(regexp = "^(0|[1-9][0-9]*)$", message = "Please enter number format")
 	@Column(name = "duration")
 	@NotNull(message = "Please enter duration ")
-	private String duration;
+	private Double duration;
 
 }

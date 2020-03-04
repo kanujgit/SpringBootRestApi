@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +26,21 @@ public class FlightController {
 
 	@PostMapping("/")
 	public Response<Flight> saveDetail(@Valid @RequestBody Flight flight) {
-		Flight ft = flightService.addFlight(flight);
+		Flight ft = null;
+		try {
+			ft = flightService.addFlight(flight);
+
+			// TODO handle unique value violation
+		} catch (DataIntegrityViolationException e) {
+
+			return new Response<>(flight.getFlightName() + " flight already exists");
+
+		} catch (Exception e) {
+
+			return new Response<>(flight.getFlightName() + " flight already exists");
+		}
 		return new Response<Flight>(ft, "data save successfully");
+
 	}
 
 	@GetMapping("/")
@@ -35,10 +49,18 @@ public class FlightController {
 		return new Response<List<Flight>>(list, "Flight list fetch successfully");
 	}
 
-	@PostMapping("/{name}")
+	@GetMapping("/{name}")
 	public Response<Flight> getDetailByName(@PathVariable(required = true) String name) {
 		Flight list = flightService.getDetailByName(name);
 		return new Response<Flight>(list, "Flight list fetch successfully");
+	}
+
+	@GetMapping("/fetchByArrDep/{departureLocation}/{arrivalLocation}")
+	public Response<List<Flight>> getDetailByArrDepLoc(
+			@PathVariable(value = "departureLocation", required = true) String departure,
+			@PathVariable(value = "arrivalLocation", required = true) String arrived) {
+		List<Flight> list = flightService.getDetByArrAndDeptLocation(departure, arrived, "");
+		return new Response<List<Flight>>(list, "Flight list fetch successfully");
 	}
 
 }
